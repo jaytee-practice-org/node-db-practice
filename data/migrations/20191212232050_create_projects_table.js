@@ -29,7 +29,7 @@ exports.up = function(knex) {
         // By default, referenced data points are unable to be updated/deleted
         .onUpdate('CASCADE')
         // RESTRICT allows you to delete data referred to by a foreign key only if no other data relies on it. e.g. deleting a customer record when there are customer orders referring to it. A customer who has made no orders could be safely deleted.
-        .onDelete('RESTRICT')
+        .onDelete('CASCADE')
     })
 
     .createTable('resources', tbl => {

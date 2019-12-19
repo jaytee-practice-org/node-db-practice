@@ -7,7 +7,8 @@ exports.seed = function(knex) {
       return knex('projects').insert([
         {name: "Create new app", description: "I need to make a sweet app"},
         {name: "Rebalance investment portfolio"},
-        {name: "Rebuild old PC"}
+        {name: "Rebuild old PC"},
+        {name: "Build brand new PC"}
       ]);
     });
 };

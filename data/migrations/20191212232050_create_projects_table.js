@@ -3,7 +3,8 @@ exports.up = function(knex) {
   return knex.schema
     .createTable('projects', tbl => {
       // primary key
-      tbl.increments();
+      tbl.increments()
+        // .unsigned();
 
       tbl.text('name')
         .notNullable();
@@ -13,7 +14,8 @@ exports.up = function(knex) {
 
     .createTable('tasks', tbl => {
       // primary key
-      tbl.increments();
+      tbl.increments()
+        // .unsigned();
 
       tbl.text('description')
         .notNullable();
@@ -34,11 +36,29 @@ exports.up = function(knex) {
 
     .createTable('resources', tbl => {
       // primary key
-      tbl.increments();
+      tbl.increments()
+        // .unsigned();
 
       tbl.text('name')
         .notNullable();
       tbl.text('description');
+    })
+
+    .createTable('project_resources', tbl => {
+      tbl.integer('project_id')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('projects');
+      tbl.integer('resource_id')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('resources');
+
+      // the combination of the two keys becomes the primary key
+      // will enforce unique combination of ids
+      tbl.primary(['project_id', 'resource_id']);
     });
 };
 
@@ -46,5 +66,6 @@ exports.down = function(knex) {
   return knex.schema
     .dropTableIfExists('projects')
     .dropTableIfExists('tasks')
-    .dropTableIfExists('resources');
+    .dropTableIfExists('resources')
+    .dropTableIfExists('project_resources');
 };
